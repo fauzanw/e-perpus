@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{AuthController};
+use App\Http\Controllers\{AuthController, DashboardController};
 
 
 /*
@@ -19,6 +19,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['prefix' => 'auth'], function($route) {
-    $route->get('/login', [AuthController::class, 'login']);
+Route::group(['prefix' => 'auth', 'middleware' => ['custom-guest']], function($route) {
+    $route->get('/login', [AuthController::class, 'login'])->name('auth.login');
+    $route->post('/login', [AuthController::class, 'doLogin'])->name('auth.doLogin');
+    $route->get('/register', [AuthController::class, 'register'])->name('auth.register');
+    $route->post('/register', [AuthController::class, 'doRegister'])->name('auth.doRegister');
+    $route->get('/logout', [AuthController::class, 'logout'])->name('auth.logout')->withoutMiddleware('custom-guest');
+});
+
+Route::group(['prefix' => 'dashboard', 'middleware' => ['custom-auth']], function($route) {
+    $route->get('index', [DashboardController::class, 'index'])->name('dashboard.index');
 });

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->char('nis', 20)->nullable();
             $table->string('fullname', 125);
             $table->string('username', 50);
-            $table->string('password', 50);
+            $table->string('password', 255);
             $table->string('kelas', 50)->nullable();
             $table->string('alamat', 225)->nullable();
             $table->string('verif', 50)->nullable();
