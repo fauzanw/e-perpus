@@ -1,31 +1,36 @@
 @extends('dashboard._layout')
-@section('title', 'Data Kategori Buku')
+@section('title', 'Data Buku')
 
 @section('content')
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
+            <a href="{{ route('dashboard.data.buku.create') }}" class="btn btn-primary mb-2">Tambah Buku</a>
             <table class="table table-responsive-md table-striped table-hover">
                 <thead class="bg-primary text-white">
                     <tr>
                         <td>No</td>
-                        <td>Kode Kategori</td>
-                        <td>Nama Kategori</td>
+                        <td>Judul Buku</td>
+                        <td>Kategori</td>
+                        <td>Tahun Terbit</td>
+                        <td>ISBN</td>
                         <td>Aksi</td>
                     </tr>
                 </thead>
                 <tbody>
                     @php $i = 1 @endphp
-                    @if(!$kategori_bukus->isEmpty())
-                        @foreach ($kategori_bukus as $kategori)
+                    @if(!$bukus->isEmpty())
+                        @foreach ($bukus as $buku)
                             <tr>
                                     <td>{{ $i++ }}</td>
-                                    <td>{{ $kategori->kode_kategori }}</td>
-                                    <td>{{ $kategori->nama_kategori }}</td>
+                                    <td>{{ $buku->judul_buku }}</td>
+                                    <td>{{ $buku->kategori->nama_kategori }}</td>
+                                    <td>{{ $buku->tahun_terbit }}</td>
+                                    <td>{{ $buku->isbn }}</td>
                                     <td class="d-flex">
-                                        <a class="badge badge-primary btnEdit mx-1" data-id="{{ $kategori->id_kategori }}" data-toggle="modal" data-target="#editKategoriModal">
+                                        <a class="badge badge-primary btnEdit mx-1" data-id="{{ $buku->id_buku }}" data-toggle="modal" data-target="#editKategoriModal">
                                             <i class="fas fa-edit text-white"></i> Edit
                                         </a>
-                                        <a href="{{ route('dashboard.data.kategori_buku.delete', $kategori->id_kategori) }}" class="badge badge-danger mx-1">
+                                        <a href="{{ route('dashboard.data.kategori_buku.delete', $buku->id_buku) }}" class="badge badge-danger mx-1">
                                             <i class="fas fa-trash text-white"></i> Hapus
                                         </a>
                                     </td>
@@ -36,28 +41,6 @@
                     @endif
                 </tbody>
             </table>
-        </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <form action="{{ route('dashboard.data.kategori_buku.create') }}" method="post">
-                        @csrf
-                        <div class="form-group">
-                            <label for="kode_kategori">Kode Kategori</label>
-                            <input type="text" class="form-control" name="kode_kategori" id="kode_kategori" value="{{ $kode_kategori }}" readonly>
-                            <small class="text-muted">* Kode Kategori Buku dibuat secara otomatis</small>
-                        </div>
-                        <div class="form-group">
-                            <label for="nama_kategori">Nama Kategori</label>
-                            <input type="text" class="form-control @error('nama_kategori') is-invalid @enderror" name="nama_kategori" id="nama_kategori" value="{{ old('nama_kategori') }}">
-                            @error('nama_kategori')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block">Tambahkan</button>
-                    </form>
-                </div>
-            </div>
         </div>
     </div>
 

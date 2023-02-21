@@ -19,9 +19,45 @@ class DashboardController extends Controller
         return view('dashboard.index', compact('users_count', 'buku_count', 'peminjaman_count', 'pengembalian_count'));
     }
 
+    public function buku()
+    {
+        $bukus = Buku::with('kategori', 'penerbit')->get()->sortByDesc('id_buku');
+        $kode_kategori = strtoupper("KKB". Str::random(5));
+        return view('dashboard.data.buku', compact('bukus'));
+    }
+    
+    public function createBuku(Request $request)
+    {
+        $kategoris = Kategori::all()->sortByDesc('id_kategori');
+        $penerbits = Penerbit::all()->sortByDesc('id_penerbit');
+        return view('dashboard.data.create_buku', compact('kategoris', 'penerbits'));
+    }
+
+    public function doCreateBuku(Request $request)
+    {
+        $data = $request->validate([
+            'judul_buku' => 'required|min:8',
+            'tahun_terbit' => 'required|numeric',
+            'kategori' => 'required|exists:kategoris,id_kategori',
+            'nama_penerbit' => 'required|exists:penerbits,id_penerbit',
+            'isbn' => 'required|size:13',
+            'cover_buku' => 'required|image|mimes:jpg,png,jpeg',
+            'jumlah_buku_baik' => 'required|numeric',
+            'jumlah_buku_rusak' => 'required|numeric',
+        ]);
+        $image = $request->file('cover_buku');
+        $filename = uniqid() . date('dmY') . '-' . $image->getClientOriginalName();
+
+        $image->store(public_path('img/cover_buku'), $filename);
+
+        echo $filename; die;
+
+        return redirect()->route('dashboard.data.create_buku')->with(['success' => 'Registration successfull!']);
+    }
+
     public function kategoriBuku()
     {
-        $kategori_bukus = Kategori::get();
+        $kategori_bukus = Kategori::get()->sortByDesc('id_kategori');
         $kode_kategori = strtoupper("KKB". Str::random(5));
         return view('dashboard.data.kategori_buku', compact('kategori_bukus', 'kode_kategori'));
     }
@@ -36,6 +72,35 @@ class DashboardController extends Controller
         Kategori::create($data);
     
         return redirect()->route('dashboard.data.kategori_buku')->with(['success' => 'Berhasil menambahkan kategori buku!']);
+    }
+    
+    public function deleteKategoriBuku(Kategori $id_kategori)
+    {
+        $id_kategori->delete();
+        return redirect()->route('dashboard.data.kategori_buku')->with(['success' => 'Delete successfull!']);
+    }
+
+    public function getKategoriBuku()
+    {
+        $kategori = Kategori::where('id_kategori', $_GET['id'])->first();
+        if($kategori) {
+            echo $kategori;
+        }else {
+            abort(404);
+        }
+    }
+
+    public function editKategoriBuku(Request $request)
+    {
+        $id = $request->get('id');
+        $update = Kategori::where('id_kategori', $id)->update([
+            'nama_kategori' => $request->get('namaKategori')
+        ]);
+        if($update) {
+            return redirect()->route('dashboard.data.kategori_buku')->with(['success' => 'Update successfull!']);
+        }else{
+            return redirect()->route('dashboard.data.kategori_buku')->with(['error' => 'Update error!']);
+        }
     }
 
     public function anggota()

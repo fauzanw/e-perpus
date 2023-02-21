@@ -30,8 +30,15 @@ Route::group(['prefix' => 'auth', 'middleware' => ['custom-guest']], function($r
 Route::group(['prefix' => 'dashboard', 'middleware' => ['custom-auth']], function($route) {
     $route->get('index', [DashboardController::class, 'index'])->name('dashboard.index');
 
+    $route->get('/data/buku', [DashboardController::class, 'buku'])->name('dashboard.data.buku');
+    $route->get('/data/buku/create', [DashboardController::class, 'createBuku'])->name('dashboard.data.buku.create');
+    $route->post('/data/buku/create', [DashboardController::class, 'doCreateBuku'])->name('dashboard.data.buku.doCreate');
+
     $route->get('/data/kategori_buku', [DashboardController::class, 'kategoriBuku'])->name('dashboard.data.kategori_buku');
     $route->post('/data/kategori_buku/create', [DashboardController::class, 'createKategoriBuku'])->name('dashboard.data.kategori_buku.create');
+    $route->get('/data/kategori_buku/{id_kategori}/delete', [DashboardController::class, 'deleteKategoriBuku'])->name('dashboard.data.kategori_buku.delete');
+    $route->get('/data/kategori_buku/get', [DashboardController::class, 'getKategoriBuku'])->name('dashboard.data.kategori_buku.get');
+    $route->put('/data/kategori_buku/edit', [DashboardController::class, 'editKategoriBuku'])->name('dashboard.data.kategori_buku.edit');
 
     $route->get('/data/anggota', [DashboardController::class, 'anggota'])->name('dashboard.data.anggota');
     $route->post('data/anggota', [DashboardController::class, 'createAnggota'])->name('dashboard.data.anggota.create');

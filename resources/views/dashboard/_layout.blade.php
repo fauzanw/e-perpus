@@ -60,8 +60,8 @@
             </a>
             <div id="collapseTwo" class="collapse @if(request()->segment(1) == 'dashboard' && request()->segment(2) == 'data') show @endif" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="cards.html">Data Buku</a>
-                    <a class="collapse-item @if(url()->current() == route('dashboard.data.kategori_buku')) active @endif" href="{{ route('dashboard.data.kategori_buku') }}">Data Kategori Buku</a>
+                        <a class="collapse-item @if(url()->current() == route('dashboard.data.buku')) active @endif" href="{{ route('dashboard.data.buku') }}">Data Buku</a>
+                        <a class="collapse-item @if(url()->current() == route('dashboard.data.kategori_buku')) active @endif" href="{{ route('dashboard.data.kategori_buku') }}">Data Kategori Buku</a>
                         <a class="collapse-item @if(url()->current() == route('dashboard.data.anggota')) active @endif" href="{{ route('dashboard.data.anggota') }}">Data Anggota</a>
                         <a class="collapse-item @if(url()->current() == route('dashboard.data.penerbit')) active @endif" href="{{ route('dashboard.data.penerbit') }}">Data Penerbit</a>
                         <a class="collapse-item @if(url()->current() == route('dashboard.data.administrator')) active @endif" href="{{ route('dashboard.data.administrator') }}">Data Administrator</a>
@@ -219,6 +219,13 @@
     <script src="{{ asset('js/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('js/demo/chart-pie-demo.js') }}"></script>
     @yield('js')
+    <script>
+        $('input[type=file]').on('change',function(e){
+            //get the file name
+           var fileName = e.target.files[0].name;
+            $('.custom-file-label').html(fileName);
+        })
+    </script>
 
 </body>
 

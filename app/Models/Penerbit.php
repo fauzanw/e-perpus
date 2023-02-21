@@ -16,4 +16,9 @@ class Penerbit extends Model
         'nama_penerbit',
         'verif_penerbit'
     ];
+
+    public function buku()
+    {
+        return $this->hasMany(Buku::class);
+    }
 }
