@@ -1,8 +1,8 @@
-@extends('auth.layout')
+@extends('auth._layout')
 
 @section('title', 'Register')
 
-@section('section-title', 'Auth Register')
+@section('section-title', 'Register')
 
 @section('content')
     <form class="user" method="post" action="{{ route('auth.doRegister') }}">

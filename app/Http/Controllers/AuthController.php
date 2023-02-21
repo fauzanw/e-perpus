@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\{Hash, Auth};
 
@@ -25,6 +26,7 @@ class AuthController extends Controller
         
         if(Auth::attempt($credentials)) {
             // User::g
+            User::where('id_user', User::where('id_user', Auth::user()->id_user)->update(['terakhir_login' => date('h:i:s d/m/Y')]));
             $request->session()->put(['user' => [
                 'id_user' => Auth::user()->id_user,
                 'kode_user' => Auth::user()->kode_user,
@@ -51,6 +53,7 @@ class AuthController extends Controller
         ]);
 
         $data['kode_user'] = Str::random(8);
+        $data['role'] = 'user';
         $data['password'] = Hash::make($request->get('password'));
 
         User::create($data);
@@ -62,7 +65,6 @@ class AuthController extends Controller
     {
         $request->session()->forget('user');
         $request->session()->flush();
-
     
         return redirect()->route('auth.login');
     }

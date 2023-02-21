@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id('id_penerbit');
             $table->string('kode_penerbit', 125);
             $table->string('nama_penerbit', 50);
-            $table->string('verif_penerbit', 25);
+            $table->enum('verif_penerbit', ['verified', 'not_verified']);
             $table->timestamps();
         });
     }
