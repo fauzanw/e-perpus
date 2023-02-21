@@ -38,21 +38,19 @@ class DashboardController extends Controller
         $data = $request->validate([
             'judul_buku' => 'required|min:8',
             'tahun_terbit' => 'required|numeric',
-            'kategori' => 'required|exists:kategoris,id_kategori',
-            'nama_penerbit' => 'required|exists:penerbits,id_penerbit',
+            'kategori_id' => 'required|exists:kategoris,id_kategori',
+            'penerbit_id' => 'required|exists:penerbits,id_penerbit',
             'isbn' => 'required|size:13',
             'cover_buku' => 'required|image|mimes:jpg,png,jpeg',
             'jumlah_buku_baik' => 'required|numeric',
             'jumlah_buku_rusak' => 'required|numeric',
         ]);
-        $image = $request->file('cover_buku');
-        $filename = uniqid() . date('dmY') . '-' . $image->getClientOriginalName();
 
-        $image->store(public_path('img/cover_buku'), $filename);
+        $data['cover_buku'] = $request->file('cover_buku')->store('cover_buku');
 
-        echo $filename; die;
+        Buku::create($data);
 
-        return redirect()->route('dashboard.data.create_buku')->with(['success' => 'Registration successfull!']);
+        return redirect()->route('dashboard.data.buku')->with(['success' => 'Add buku successfull!']);
     }
 
     public function kategoriBuku()

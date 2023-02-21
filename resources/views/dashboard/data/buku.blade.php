@@ -9,6 +9,7 @@
                 <thead class="bg-primary text-white">
                     <tr>
                         <td>No</td>
+                        <td>Cover</td>
                         <td>Judul Buku</td>
                         <td>Kategori</td>
                         <td>Tahun Terbit</td>
@@ -22,6 +23,7 @@
                         @foreach ($bukus as $buku)
                             <tr>
                                     <td>{{ $i++ }}</td>
+                                    <td><img src="{{ asset('storage') . '/' . $buku->cover_buku }}" class="img-fluid" width="50"></td>
                                     <td>{{ $buku->judul_buku }}</td>
                                     <td>{{ $buku->kategori->nama_kategori }}</td>
                                     <td>{{ $buku->tahun_terbit }}</td>

@@ -27,26 +27,26 @@
                         </div>
                         <div class="row mt-2">
                             <div class="col">
-                                <label for="kategori">Kategori</label>
-                                <select class="custom-select @error('kategori') is-invalid @enderror" id="kategori" name="kategori">
+                                <label for="kategori_id">Kategori</label>
+                                <select class="custom-select @error('kategori_id') is-invalid @enderror" id="kategori_id" name="kategori_id">
                                     <option selected>--- PILIH KATEGORI ---</option>
                                     @foreach ($kategoris as $kategori)
-                                        <option @if (old('kategori') == $kategori->id_kategori) {{ 'selected' }} @endif value="{{ $kategori->id_kategori }}">{{ $kategori->nama_kategori }}</option>
+                                        <option @if (old('kategori_id') == $kategori->id_kategori) {{ 'selected' }} @endif value="{{ $kategori->id_kategori }}">{{ $kategori->nama_kategori }}</option>
                                     @endforeach
                                 </select>                 
-                                @error('kategori')
+                                @error('kategori_id')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror               
                             </div>
                             <div class="col">
-                                <label for="nama_penerbit">Nama Penerbit</label>
-                                <select class="custom-select @error('nama_penerbit') is-invalid @enderror" id="nama_penerbit" name="nama_penerbit">
+                                <label for="penerbit_id">Nama Penerbit</label>
+                                <select class="custom-select @error('penerbit_id') is-invalid @enderror" id="penerbit_id" name="penerbit_id">
                                     <option selected>--- PILIH PENERBIT ---</option>
                                     @foreach ($penerbits as $penerbit)
-                                    <option @if (old('nama_penerbit') == $penerbit->id_penerbit) {{ 'selected' }} @endif value="{{ $penerbit->id_penerbit }}">{{ $penerbit->nama_penerbit }}</option>
+                                    <option @if (old('penerbit_id') == $penerbit->id_penerbit) {{ 'selected' }} @endif value="{{ $penerbit->id_penerbit }}">{{ $penerbit->nama_penerbit }}</option>
                                     @endforeach
                                 </select>                                
-                                @error('nama_penerbit')
+                                @error('penerbit_id')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror               
                             </div>
