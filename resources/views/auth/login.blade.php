@@ -1,32 +1,35 @@
-@extends('auth._layout')
-
-@section('title', 'Login')
-
-@section('section-title', 'Login')
+@extends('auth.layouts.main')
+@section('title', 'Auth Login')
 
 @section('content')
-    <form class="user" method="post" action="{{ route('auth.doLogin') }}">
-        @csrf
-        @include('_notification')
-        <div class="form-group">
-            <input type="text" class="form-control form-control-user @error('username') is-invalid @enderror" id="username" name="username" placeholder="Username" value="{{ old('username') }}">
-            @error('username')
-                <small class="text-danger">{{ $message }}</small>
-            @enderror
+<div id="auth-left">
+<div class="auth-logo">
+    <a href="index.html"><img src="{{ asset('assets/images/logo/logo.svg') }}" alt="Logo"></a>
+</div>
+<h1 class="auth-title">Login.</h1>
+<p class="text-muted mb-3">Sebelum bisa mengakses perpustakaan, kamu perlu masuk terlebih dahulu.</p>
+
+<form method="post" action="{{ route('auth.doLogin') }}">
+    @csrf
+    <div class="form-group position-relative has-icon-left mb-2">
+        <input type="text" class="form-control form-control-xl @error('username') is-invalid @enderror" placeholder="Username" name="username" id="username" value="{{ old('username') }}">
+        <div class="form-control-icon">
+            <i class="bi bi-person"></i>
         </div>
-        <div class="form-group">
-            <input type="password" class="form-control form-control-user @error('password') is-invalid @enderror" name="password"
-                id="password" placeholder="Password">
-            @error('password')
-                <small class="text-danger">{{ $message }}</small>
-            @enderror
-        </div>
-        <button type="submit" class="btn btn-primary btn-user btn-block">
-            Login
-        </button>
-    </form>
-    <hr>
-    <div class="text-center">
-        <a class="small" href="{{ route('auth.register') }}">Create an Account!</a>
+        @error('username')
+            <small class="text-danger">{{ $message }}</small>
+        @enderror
     </div>
+    <div class="form-group position-relative has-icon-left mb-2">
+        <input type="password" class="form-control form-control-xl @error('password') is-invalid @enderror" placeholder="Password" name="password" id="password" value="{{ old('password') }}">
+        <div class="form-control-icon">
+            <i class="bi bi-shield-lock"></i>
+        </div>
+        @error('password')
+            <small class="text-danger">{{ $message }}</small>
+        @enderror
+    </div>
+    <button class="btn btn-primary btn-block btn-lg shadow-lg mt-2">Login</button>
+</form>
+</div>
 @endsection

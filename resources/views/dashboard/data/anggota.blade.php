@@ -1,43 +1,64 @@
-@extends('dashboard._layout')
+
+@extends('dashboard.layouts.main')
 @section('title', 'Data Anggota')
 
 @section('content')
-    <div class="row">
+<div class="page-heading">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <h3>Data Anggota</h3>
+                <p class="text-subtitle text-muted">Sebuah halaman untuk mengelola data anggota perpustakaan.</p>
+            </div>
+            <div class="col-12 col-md-6 order-md-2 order-first">
+                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">Dashboard</li>
+                        <li class="breadcrumb-item">Data</li>
+                        <li class="breadcrumb-item active" aria-current="page">Anggota</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <section class="row">
         <div class="col-md-8">
-            <table class="table table-responsive-md table-striped table-hover">
-                <thead class="bg-primary text-white">
-                    <tr>
-                        <td>No</td>
-                        <td>Kode User</td>
-                        <td>NIS</td>
-                        <td>Nama Lengkap</td>
-                        <td>Kelas</td>
-                        <td>Alamat</td>
-                        <td>Aksi</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php $i = 1 @endphp
-                    @foreach ($users as $user)
-                        <tr>
-                            <td>{{ $i++ }}</td>
-                            <td>{{ $user->kode_user }}</td>
-                            <td>{{ (!$user->nis) ? '-':$user->nis }}</td>
-                            <td>{{ (!$user->fullname) ? '-':Str::limit($user->fullname, 19) }}</td>
-                            <td>{{ (!$user->kelas) ? '-':$user->kelas }}</td>
-                            <td>{{ (!$user->alamat) ? '-':$user->alamat }}</td>
-                            <td class="d-flex">
-                                <a class="badge badge-primary btnInfo mx-1" data-id="{{ $user->id_user }}" data-toggle="modal" data-target="#infoModal">
-                                    <i class="fas fa-edit text-white"></i> Info
-                                </a>
-                                <a href="{{ route('dashboard.data.anggota.delete', $user->id_user) }}" class="badge badge-danger mx-1">
-                                    <i class="fas fa-trash text-white"></i> Hapus
-                                </a>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            <div class="card">
+                <div class="card-body">
+                    <div class="col-12">
+                        <table class="table table-responsive table-hover" id="table">
+                            <thead class="bg-primary text-white">
+                                <tr>
+                                    <td>No</td>
+                                    <td>Kode User</td>
+                                    <td>Full Name</td>
+                                    <td>Username</td>
+                                    <td>Aksi</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php $i = 1 @endphp
+                                @foreach ($users as $user)
+                                    <tr>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $user->kode_user }}</td>
+                                        <td>{{ (!$user->fullname) ? '-':Str::limit($user->fullname, 19) }}</td>
+                                        <td>{{ $user->username }}</td>
+                                        <td>
+                                            <a class="badge btn-block bg-primary btnInfo mx-1" data-id="{{ $user->id_user }}" data-bs-toggle="modal" data-bs-target="#infoModal">
+                                                <i class="bi bi-pencil text-white"></i> Info
+                                            </a>
+                                            <a href="{{ route('dashboard.data.anggota.delete', $user->id_user) }}" class="badge btn-block bg-danger mx-1">
+                                                <i class="bi bi-trash text-white"></i> Hapus
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-md-4">
             <div class="card">
@@ -70,50 +91,81 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="infoModalLabel">Profil Anggota</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
-            <div class="modal-body">
-                    <div class="form">
-                        @csrf
-                        <input type="hidden" name="id" id="idModal">
-                        <div class="form-group">
-                            <label for="fullname">Full Name</label>
-                            <input type="text" class="form-control" name="fullname" id="fullnameModal">
-                        </div>
-                        <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" class="form-control" name="username" id="usernameModal">
-                        </div>
-                    </div>
-                    <div class="loading text-center">
+    </section>
+    <!--Extra Large Modal -->
+    <div class="modal fade text-left w-100" id="infoModal" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel16" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"
+            role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel16">Detail user</h4>
+                    <button type="button" class="close" data-bs-dismiss="modal"
+                        aria-label="Close">
+                        <i data-feather="x"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered" id="table-info">
+                        <tr>
+                            <th>Kode User</th>
+                            <td id="modal_kode_user"></td>
+                        </tr>
+                        <tr>
+                            <th>Nama Lengkap</th>
+                            <td id="modal_nama_lengkap"></td>
+                        </tr>
+                        <tr>
+                            <th>Username</th>
+                            <td id="modal_username"></td>
+                        </tr>
+                        <tr>
+                            <th>NIS</th>
+                            <td id="modal_nis"></td>
+                        </tr>
+                        <tr>
+                            <th>Kelas</th>
+                            <td id="modal_kelas"></td>
+                        </tr>
+                        <tr>
+                            <th>Alamat</th>
+                            <td id="modal_alamat"></td>
+                        </tr>
+                        <tr>
+                            <th>Terakhir Login</th>
+                            <td id="modal_last_login"></td>
+                        </tr>
+                    </table>
+                    <div class="text-center" id="loading">
                         <h3>Loading....</h3>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-light-secondary"
+                        data-bs-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Close</span>
+                    </button>
+                    <button type="button" class="btn btn-primary ml-1"
+                        data-bs-dismiss="modal">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Accept</span>
+                    </button>
                 </div>
             </div>
-        </div> 
+        </div>
     </div>
+    <!-- End Modal -->
+</div>
 @endsection
 
 @section('js')
-    <script>
-        $('.loading').hide();
+<script>
+        $('#loading').hide();
         $('.btnInfo').on("click", function() {
             var user_id = $(this).data('id');
-            $('.loading').show();
-            $('.form').hide();
+            $('#loading').show();
+            $('#table-info').hide();
             $.ajax({
                 url: "{{ route('dashboard.data.anggota.get') }}",
                 data: {
@@ -121,10 +173,16 @@
                 },
                 success: function(response) {
                     var res = JSON.parse(response);
-                    $('.loading').hide();
-                    $('.form').show();
-                    $('#fullnameModal').val(res.fullname)
-                    $('#usernameModal').val(res.username)
+                    console.log(res);
+                    $('#loading').hide();
+                    $('#table-info').show();
+                    $('#modal_kode_user').html(res.kode_user)
+                    $('#modal_nama_lengkap').html(res.fullname)
+                    $('#modal_username').html(res.username)
+                    $('#modal_kelas').html((res.kelas) ? res.kelas:'<small class="text-muted">Belum diupdate</small')
+                    $('#modal_alamat').html((res.alamat) ? res.alamat:'<small class="text-muted">Belum diupdate</small')
+                    $('#modal_nis').html((res.nis) ? res.nis:'<small class="text-muted">Belum diupdate</small')
+                    $('#modal_last_login').html((res.terakhir_login) ? res.terakhir_login:'<small class="text-muted">Belum diupdate</small')
                     $('#idModal').val(user_id)
                 },
             })

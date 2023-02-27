@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('kelas', 50)->nullable();
             $table->string('alamat', 225)->nullable();
             $table->string('verif', 50)->nullable();
-            $table->enum('role', ['admin', 'user'])->nullable();
+            $table->enum('role', ['admin', 'user']);
             $table->string('join_date', 125)->nullable();
             $table->string('terakhir_login', 125)->nullable();
             $table->rememberToken();

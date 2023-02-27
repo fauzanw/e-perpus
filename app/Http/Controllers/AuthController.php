@@ -31,7 +31,8 @@ class AuthController extends Controller
                 'id_user' => Auth::user()->id_user,
                 'kode_user' => Auth::user()->kode_user,
                 'fullname' => Auth::user()->fullname,
-                'username' => Auth::user()->username
+                'username' => Auth::user()->username,
+                'role' => Auth::user()->role
             ]]);
             return redirect()->intended(route('dashboard.index'));
         }

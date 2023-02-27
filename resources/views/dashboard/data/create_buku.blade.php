@@ -1,11 +1,35 @@
-@extends('dashboard._layout')
-@section('title', 'Tambah Buku')
+@extends('dashboard.layouts.main')
+@section('title', 'Data Buku')
+
+@section('head')
+        <link rel="stylesheet" href="{{ asset('assets/extensions/choices.js/public/assets/styles/choices.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/extensions/filepond/filepond.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/extensions/filepond-plugin-image-preview/filepond-plugin-image-preview.css') }}">
+@endsection
 
 @section('content')
-    <div class="row">
+<div class="page-heading">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <h3>Data Kategori</h3>
+                <p class="text-subtitle text-muted">Sebuah halaman untuk mengelola data kategori buku.</p>
+            </div>
+            <div class="col-12 col-md-6 order-md-2 order-first">
+                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">Dashboard</li>
+                        <li class="breadcrumb-item">Data</li>
+                        <li class="breadcrumb-item">Buku</li>
+                        <li class="breadcrumb-item active" aria-current="page">Kategori</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <section class="row">
         <div class="col-md-8">
-            <a href="{{ route('dashboard.data.buku') }}" class="btn btn-primary">Kembali</a>
-            <div class="card mt-2">
+            <div class="card">
                 <div class="card-body">
                     <form method="post" action="{{ route('dashboard.data.buku.doCreate') }}" enctype="multipart/form-data">
                         @csrf
@@ -28,7 +52,7 @@
                         <div class="row mt-2">
                             <div class="col">
                                 <label for="kategori_id">Kategori</label>
-                                <select class="custom-select @error('kategori_id') is-invalid @enderror" id="kategori_id" name="kategori_id">
+                                <select class="choices form-select @error('kategori_id') is-invalid @enderror" id="kategori_id" name="kategori_id">
                                     <option selected>--- PILIH KATEGORI ---</option>
                                     @foreach ($kategoris as $kategori)
                                         <option @if (old('kategori_id') == $kategori->id_kategori) {{ 'selected' }} @endif value="{{ $kategori->id_kategori }}">{{ $kategori->nama_kategori }}</option>
@@ -40,7 +64,7 @@
                             </div>
                             <div class="col">
                                 <label for="penerbit_id">Nama Penerbit</label>
-                                <select class="custom-select @error('penerbit_id') is-invalid @enderror" id="penerbit_id" name="penerbit_id">
+                                <select class="choices form-select @error('penerbit_id') is-invalid @enderror" id="penerbit_id" name="penerbit_id">
                                     <option selected>--- PILIH PENERBIT ---</option>
                                     @foreach ($penerbits as $penerbit)
                                     <option @if (old('penerbit_id') == $penerbit->id_penerbit) {{ 'selected' }} @endif value="{{ $penerbit->id_penerbit }}">{{ $penerbit->nama_penerbit }}</option>
@@ -60,10 +84,11 @@
                         </div>
                         <div class="form-group mt-2">
                             <label for="cover_buku">Cover Buku</label>
-                            <div class="custom-file">
+                            <input class="form-control @error('cover_buku') is-invalid @enderror" type="file" id="cover_buku" name="cover_buku">
+                            <!-- <div class="custom-file">
                                 <input type="file" class="custom-file-input @error('cover_buku') is-invalid @enderror" id="cover_buku" name="cover_buku">
                                 <label class="custom-file-label" for="cover_buku">Pilih Cover</label>
-                            </div>
+                            </div> -->
                             @error('cover_buku')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror               
@@ -89,5 +114,34 @@
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+</div>
+@endsection
+
+@section('js')
+    <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/form-element-select.js') }}"></script>
+    <script src="{{ asset('assets/extensions/filepond/filepond.js') }}"></script>
+    <script>
+        $('.loading').hide();
+        $('.btnEdit').on("click", function() {
+            var id = $(this).data('id');
+            $('.loading').show();
+            $('.form').hide();
+            $.ajax({
+                url: "{{ route('dashboard.data.kategori_buku.get') }}",
+                data: {
+                    id
+                },
+                success: function(response) {
+                    var res = JSON.parse(response);
+                    $('.loading').hide();
+                    $('.form').show();
+                    $('#kodeKategoriModal').val(res.kode_kategori)
+                    $('#namaKategoriModal').val(res.nama_kategori)
+                    $('#idModal').val(id)
+                },
+            })
+        })
+    </script>
 @endsection
