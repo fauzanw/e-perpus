@@ -7,7 +7,7 @@
     <a href="index.html"><img src="{{ asset('assets/images/logo/logo.svg') }}" alt="Logo"></a>
 </div>
 <h1 class="auth-title">Login.</h1>
-<p class="text-muted mb-3">Sebelum bisa mengakses perpustakaan, kamu perlu masuk terlebih dahulu.</p>
+<p class="text-muted mb-3">Sebelum bisa mengakses perpustakaan, kamu perlu masu k terlebih dahulu.</p>
 
 <form method="post" action="{{ route('auth.doLogin') }}">
     @csrf

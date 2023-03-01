@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
 use App\Models\{Buku, Kategori, Penerbit};
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -13,14 +15,14 @@ class BukuController extends Controller
         $kode_kategori = strtoupper("KKB". Str::random(5));
         $kategoris = Kategori::all()->sortByDesc('id_kategori');
         $penerbits = Penerbit::all()->sortByDesc('id_penerbit');
-        return view('dashboard.data.buku', compact('bukus', 'penerbits', 'kategoris'));
+        return view('dashboard.admin.data.buku', compact('bukus', 'penerbits', 'kategoris'));
     }
     
     public function create(Request $request)
     {
         $kategoris = Kategori::all()->sortByDesc('id_kategori');
         $penerbits = Penerbit::all()->sortByDesc('id_penerbit');
-        return view('dashboard.data.create_buku', compact('kategoris', 'penerbits'));
+        return view('dashboard.admin.data.create_buku', compact('kategoris', 'penerbits'));
     }
 
     public function doCreate(Request $request)
@@ -40,7 +42,7 @@ class BukuController extends Controller
 
         Buku::create($data);
 
-        return redirect()->route('dashboard.data.buku')->with(['success' => 'Add buku successfull!']);
+        return redirect()->route('dashboard.admin.data.buku')->with(['success' => 'Add buku successfull!']);
     }
 
     public function get()
@@ -51,5 +53,11 @@ class BukuController extends Controller
         }else {
             abort(404);
         }
+    }
+
+    public function delete(Buku $id_buku)
+    {
+        $id_buku->delete();
+        return redirect()->route('dashboard.admin.data.buku')->with(['success' => 'Delete successfull!']);
     }
 }

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Kategori;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class KategoriBukuController extends Controller
     {
         $kategori_bukus = Kategori::get()->sortByDesc('id_kategori');
         $kode_kategori = strtoupper("KKB". Str::random(5));
-        return view('dashboard.data.kategori_buku', compact('kategori_bukus', 'kode_kategori'));
+        return view('dashboard.admin.data.kategori_buku', compact('kategori_bukus', 'kode_kategori'));
     }
 
     public function create(Request $request)
@@ -24,13 +25,13 @@ class KategoriBukuController extends Controller
     
         Kategori::create($data);
     
-        return redirect()->route('dashboard.data.kategori_buku')->with(['success' => 'Berhasil menambahkan kategori buku!']);
+        return redirect()->route('dashboard.admin.data.kategori_buku')->with(['success' => 'Berhasil menambahkan kategori buku!']);
     }
     
     public function delete(Kategori $id_kategori)
     {
         $id_kategori->delete();
-        return redirect()->route('dashboard.data.kategori_buku')->with(['success' => 'Delete successfull!']);
+        return redirect()->route('dashboard.admin.data.kategori_buku')->with(['success' => 'Delete successfull!']);
     }
 
     public function get()
@@ -50,9 +51,9 @@ class KategoriBukuController extends Controller
             'nama_kategori' => $request->get('namaKategori')
         ]);
         if($update) {
-            return redirect()->route('dashboard.data.kategori_buku')->with(['success' => 'Update successfull!']);
+            return redirect()->route('dashboard.admin.data.kategori_buku')->with(['success' => 'Update successfull!']);
         }else{
-            return redirect()->route('dashboard.data.kategori_buku')->with(['error' => 'Update error!']);
+            return redirect()->route('dashboard.admin.data.kategori_buku')->with(['error' => 'Update error!']);
         }
     }
 }

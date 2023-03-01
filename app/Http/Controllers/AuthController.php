@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\{Hash, Auth};
 
@@ -34,7 +33,12 @@ class AuthController extends Controller
                 'username' => Auth::user()->username,
                 'role' => Auth::user()->role
             ]]);
-            return redirect()->intended(route('dashboard.index'));
+            if(Auth::user()->role == 'admin') {
+                $route = route('dashboard.admin.index');
+            }else {
+                $route = route('dashboard.user.index');
+            }
+            return redirect()->intended($route);
         }
 
         return back()->with('error', 'Login failed!');

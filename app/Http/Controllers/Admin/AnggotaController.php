@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
@@ -12,7 +13,7 @@ class AnggotaController extends Controller
     public function index()
     {
         $users = User::where('role', 'user')->get()->sortByDesc('id_user');
-        return view('dashboard.data.anggota', compact('users'));
+        return view('dashboard.admin.data.anggota', compact('users'));
     }
 
     public function create(Request $request)
@@ -29,13 +30,13 @@ class AnggotaController extends Controller
 
         User::create($data);
 
-        return redirect()->route('dashboard.data.anggota')->with(['success' => 'Registration successfull!']);
+        return redirect()->route('dashboard.admin.data.anggota')->with(['success' => 'Registration successfull!']);
     }
 
     public function delete(User $id_user)
     {
         $id_user->delete();
-        return redirect()->route('dashboard.data.anggota')->with(['success' => 'Delete successfull!']);
+        return redirect()->route('dashboard.admin.data.anggota')->with(['success' => 'Delete successfull!']);
     }
     
     public function get()
@@ -56,9 +57,9 @@ class AnggotaController extends Controller
             'username' => $request->get('username')
         ]);
         if($update) {
-            return redirect()->route('dashboard.data.anggota')->with(['success' => 'Update successfull!']);
+            return redirect()->route('dashboard.admin.data.anggota')->with(['success' => 'Update successfull!']);
         }else{
-            return redirect()->route('dashboard.data.anggota')->with(['error' => 'Update error!']);
+            return redirect()->route('dashboard.admin.data.anggota')->with(['error' => 'Update error!']);
         }
     }
 }

@@ -29,7 +29,7 @@
     <section class="row">
         <div class="card">
             <div class="card-body">
-                <a href="{{ route('dashboard.data.buku.create') }}" class="btn btn-primary mb-3">Tambah Buku</a>
+                <a href="{{ route('dashboard.admin.data.buku.create') }}" class="btn btn-primary mb-3">Tambah Buku</a>
                 <div class="col-12">
                     <table class="table table-responsive-md table-hover" id="table">
                         <thead class="bg-primary text-white">
@@ -58,7 +58,7 @@
                                             <a class="badge bg-primary btnEdit mx-1" data-id="{{ $buku->id_buku }}" data-bs-toggle="modal" data-bs-target="#editModal">
                                                 <i class="fas fa-edit text-white"></i> Edit
                                             </a>
-                                            <a href="{{ route('dashboard.data.kategori_buku.delete', $buku->id_buku) }}" class="badge bg-danger mx-1">
+                                            <a href="{{ route('dashboard.admin.data.buku.delete', $buku->id_buku) }}" class="badge bg-danger mx-1">
                                                 <i class="fas fa-trash text-white"></i> Hapus
                                             </a>
                                         </td>
@@ -93,7 +93,7 @@
                             <img id="img-cover_buku" class="img-fluid" width="100%">
                         </div>
                         <div class="col-md-8">
-                            <form method="post" action="{{ route('dashboard.data.buku.doCreate') }}" enctype="multipart/form-data">
+                            <form method="post" action="{{ route('dashboard.admin.data.buku.doCreate') }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col">
@@ -188,7 +188,7 @@
             $('#loading').show();
             $('#data').hide();
             $.ajax({
-                url: "{{ route('dashboard.data.buku.get') }}",
+                url: "{{ route('dashboard.admin.data.buku.get') }}",
                 data: {
                     id: user_id
                 },

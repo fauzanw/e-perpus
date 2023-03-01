@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class CustomGuest
+class User
 {
     /**
      * Handle an incoming request.
@@ -16,10 +16,10 @@ class CustomGuest
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!$request->session()->has('user')) {
+        if(Auth::user()->role == "user") {
             return $next($request);
         }
 
-        return redirect()->route('dashboard.admin.index');
+        abort(404);
     }
 }

@@ -47,7 +47,7 @@
                                             <a class="badge bg-primary btnEdit mx-1" data-id="{{ $kategori->id_kategori }}" data-bs-toggle="modal" data-bs-target="#editKategoriModal">
                                                 <i class="fas fa-edit text-white"></i> Edit
                                             </a>
-                                            <a href="{{ route('dashboard.data.kategori_buku.delete', $kategori->id_kategori) }}" class="badge bg-danger mx-1">
+                                            <a href="{{ route('dashboard.admin.data.kategori_buku.delete', $kategori->id_kategori) }}" class="badge bg-danger mx-1">
                                                 <i class="fas fa-trash text-white"></i> Hapus
                                             </a>
                                         </td>
@@ -65,7 +65,7 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('dashboard.data.kategori_buku.create') }}" method="post">
+                    <form action="{{ route('dashboard.admin.data.kategori_buku.create') }}" method="post">
                         @csrf
                         <div class="form-group">
                             <label for="kode_kategori">Kode Kategori</label>
@@ -98,7 +98,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                <form action="{{ route('dashboard.data.kategori_buku.edit') }}" method="post">
+                <form action="{{ route('dashboard.admin.data.kategori_buku.edit') }}" method="post">
                     @method('PUT')
                     <div class="form">
                         @csrf
@@ -143,7 +143,7 @@
             $('.loading').show();
             $('.form').hide();
             $.ajax({
-                url: "{{ route('dashboard.data.kategori_buku.get') }}",
+                url: "{{ route('dashboard.admin.data.kategori_buku.get') }}",
                 data: {
                     id
                 },

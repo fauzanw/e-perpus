@@ -7,15 +7,15 @@
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Data Anggota</h3>
-                <p class="text-subtitle text-muted">Sebuah halaman untuk mengelola data anggota perpustakaan.</p>
+                <h3>Data Administrator</h3>
+                <p class="text-subtitle text-muted">Sebuah halaman untuk mengelola data administrator perpustakaan.</p>
             </div>
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">Dashboard</li>
                         <li class="breadcrumb-item">Data</li>
-                        <li class="breadcrumb-item active" aria-current="page">Anggota</li>
+                        <li class="breadcrumb-item active" aria-current="page">Administrator</li>
                     </ol>
                 </nav>
             </div>
@@ -33,26 +33,25 @@
                                     <td>Kode User</td>
                                     <td>Full Name</td>
                                     <td>Username</td>
+                                    <td>Terakhir Login</td>
                                     <td>Aksi</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 @php $i = 1 @endphp
-                                @foreach ($users as $user)
-                                    <tr>
-                                        <td>{{ $i++ }}</td>
-                                        <td>{{ $user->kode_user }}</td>
-                                        <td>{{ (!$user->fullname) ? '-':Str::limit($user->fullname, 19) }}</td>
-                                        <td>{{ $user->username }}</td>
-                                        <td>
-                                            <a class="badge btn-block bg-primary btnInfo mx-1" data-id="{{ $user->id_user }}" data-bs-toggle="modal" data-bs-target="#infoModal">
-                                                <i class="bi bi-pencil text-white"></i> Info
-                                            </a>
-                                            <a href="{{ route('dashboard.data.anggota.delete', $user->id_user) }}" class="badge btn-block bg-danger mx-1">
-                                                <i class="bi bi-trash text-white"></i> Hapus
-                                            </a>
-                                        </td>
-                                    </tr>
+                                @foreach ($administrators as $administrator)
+                                <tr>
+                                    <td>{{ $i++ }}</td>
+                                    <td>{{ $administrator->kode_user }}</td>
+                                    <td>{{ (!$administrator->fullname) ? '-':Str::limit($administrator->fullname, 19) }}</td>
+                                    <td>{{ (!$administrator->username) ? '-':Str::limit($administrator->username, 19) }}</td>
+                                    <td>{{ (!$administrator->terakhir_login) ? '-':Str::limit($administrator->terakhir_login, 19) }}</td>
+                                    <td class="d-flex">
+                                        <a href="{{ route('dashboard.admin.data.administrator.delete', $administrator->id_user) }}" class="btn btn-danger btn-block mx-1">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -63,7 +62,7 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('dashboard.data.anggota.create') }}" method="post">
+                    <form action="{{ route('dashboard.admin.data.administrator.create') }}" method="post">
                         @csrf
                         <div class="form-group">
                             <label for="fullname">Full Name</label>
@@ -157,35 +156,4 @@
     </div>
     <!-- End Modal -->
 </div>
-@endsection
-
-@section('js')
-<script>
-        $('#loading').hide();
-        $('.btnInfo').on("click", function() {
-            var user_id = $(this).data('id');
-            $('#loading').show();
-            $('#table-info').hide();
-            $.ajax({
-                url: "{{ route('dashboard.data.anggota.get') }}",
-                data: {
-                    id: user_id
-                },
-                success: function(response) {
-                    var res = JSON.parse(response);
-                    console.log(res);
-                    $('#loading').hide();
-                    $('#table-info').show();
-                    $('#modal_kode_user').html(res.kode_user)
-                    $('#modal_nama_lengkap').html(res.fullname)
-                    $('#modal_username').html(res.username)
-                    $('#modal_kelas').html((res.kelas) ? res.kelas:'<small class="text-muted">Belum diupdate</small')
-                    $('#modal_alamat').html((res.alamat) ? res.alamat:'<small class="text-muted">Belum diupdate</small')
-                    $('#modal_nis').html((res.nis) ? res.nis:'<small class="text-muted">Belum diupdate</small')
-                    $('#modal_last_login').html((res.terakhir_login) ? res.terakhir_login:'<small class="text-muted">Belum diupdate</small')
-                    $('#idModal').val(user_id)
-                },
-            })
-        })
-    </script>
 @endsection

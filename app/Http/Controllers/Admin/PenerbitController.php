@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Penerbit;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class PenerbitController extends Controller
     {
         $penerbits = Penerbit::get()->sortByDesc('id_penerbit');
         $kode_penerbit = strtoupper("KP". Str::random(5) . date('my'));
-        return view('dashboard.data.penerbit', compact('penerbits', 'kode_penerbit'));
+        return view('dashboard.admin.data.penerbit', compact('penerbits', 'kode_penerbit'));
     }
     
     public function verify(Request $request)
@@ -21,9 +22,9 @@ class PenerbitController extends Controller
         $check = Penerbit::where('id_penerbit', $id)->first();
         if($check) {
             Penerbit::where('id_penerbit', $id)->update(['verif_penerbit' => 'verified']);
-            return redirect()->route('dashboard.data.penerbit')->with(['success' => 'Verif successfull!']);
+            return redirect()->route('dashboard.admin.data.penerbit')->with(['success' => 'Verif successfull!']);
         }else {
-            return redirect()->route('dashboard.data.penerbit')->with(['error' => 'Unregistered publisher id
+            return redirect()->route('dashboard.admin.data.penerbit')->with(['error' => 'Unregistered publisher id
             !']);
         }
     }
@@ -37,7 +38,7 @@ class PenerbitController extends Controller
         $data['verif_penerbit'] = 'not_verified';
         
         Penerbit::create($data);
-        return redirect()->route('dashboard.data.penerbit')->with(['success' => 'Create penerbit successfull!']);
+        return redirect()->route('dashboard.admin.data.penerbit')->with(['success' => 'Create penerbit successfull!']);
     }
 
     public function edit(Request $request)
@@ -50,16 +51,16 @@ class PenerbitController extends Controller
             'nama_penerbit' => $request->get('nama_penerbit')
         ]);
         if($update) {
-            return redirect()->route('dashboard.data.penerbit')->with(['success' => 'Update successfull!']);
+            return redirect()->route('dashboard.admin.data.penerbit')->with(['success' => 'Update successfull!']);
         }else{
-            return redirect()->route('dashboard.data.penerbit')->with(['error' => 'Update error!']);
+            return redirect()->route('dashboard.admin.data.penerbit')->with(['error' => 'Update error!']);
         }
     }
 
     public function delete(Penerbit $id_penerbit)
     {
         $id_penerbit->delete();
-        return redirect()->route('dashboard.data.penerbit')->with(['success' => 'Delete successfull!']);
+        return redirect()->route('dashboard.admin.data.penerbit')->with(['success' => 'Delete successfull!']);
     }
 
     public function get()

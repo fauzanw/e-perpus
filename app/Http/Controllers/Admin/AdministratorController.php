@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
@@ -12,7 +13,7 @@ class AdministratorController extends Controller
     public function index()
     {
         $administrators = User::where('role', 'admin')->get()->sortByDesc('id_user');
-        return view('dashboard.data.administrator', compact('administrators'));
+        return view('dashboard.admin.data.administrator', compact('administrators'));
     }
 
     public function create(Request $request)
@@ -29,12 +30,12 @@ class AdministratorController extends Controller
 
         User::create($data);
 
-        return redirect()->route('dashboard.data.administrator')->with(['success' => 'Registration successfull!']);
+        return redirect()->route('dashboard.admin.data.administrator')->with(['success' => 'Registration successfull!']);
     }
 
     public function delete(User $id_user)
     {
         $id_user->delete();
-        return redirect()->route('dashboard.data.administrator')->with(['success' => 'Delete successfull!']);
+        return redirect()->route('dashboard.admin.data.administrator')->with(['success' => 'Delete successfull!']);
     }
 }

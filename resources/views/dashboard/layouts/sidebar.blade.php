@@ -3,7 +3,7 @@
         <div class="sidebar-header position-relative">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="logo">
-                    <a href="index.html" class="h5 text-primary"><i class="bi bi-book-fill"></i> FH-LIB</a>
+                    <a href="index.html" class="h5 text-primary"><i class="bi bi-book-fill"></i> {{ \App\Models\Identitas::where('id_identitas', 1)->first()->nama_app }}</a>
                 </div>
                 <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
@@ -42,42 +42,65 @@
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
                 
+                @if(Auth::user()->role == "admin")
                 <li
-                    class="sidebar-item @if(url()->current() == route('dashboard.index')) active @endif ">
-                    <a href="{{ route('dashboard.index') }}" class='sidebar-link'>
+                    class="sidebar-item @if(url()->current() == route('dashboard.admin.index')) active @endif ">
+                    <a href="{{ route('dashboard.admin.index') }}" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 
                 <li
-                class="sidebar-item @if(request()->segment(1) == 'dashboard' && request()->segment(2) == 'data') active @endif  has-sub">
+                class="sidebar-item @if(request()->segment(1) == 'admin' && request()->segment(2) == 'data') active @endif  has-sub">
                 <a href="#" class='sidebar-link'>
                         <i class="bi bi-list-ul"></i>
                         <span>Master Data</span>
                     </a>
-                    <ul class="submenu @if(request()->segment(1) == 'dashboard' && request()->segment(2) == 'data') active @endif">
-                        <li class="submenu-item @if(url()->current() == route('dashboard.data.buku')) active @endif">
-                            <a href="{{ route('dashboard.data.buku') }}">Data Buku</a>
+                    <ul class="submenu @if(request()->segment(1) == 'admin' && request()->segment(2) == 'data') active @endif">
+                        <li class="submenu-item @if(url()->current() == route('dashboard.admin.data.buku')) active @endif">
+                            <a href="{{ route('dashboard.admin.data.buku') }}">Data Buku</a>
                         </li>
-                        <li class="submenu-item @if(url()->current() == route('dashboard.data.kategori_buku')) active @endif">
-                            <a href="{{ route('dashboard.data.kategori_buku') }}">Data Kategori Buku</a>
+                        <li class="submenu-item @if(url()->current() == route('dashboard.admin.data.kategori_buku')) active @endif">
+                            <a href="{{ route('dashboard.admin.data.kategori_buku') }}">Data Kategori Buku</a>
                         </li>
-                        <li class="submenu-item @if(url()->current() == route('dashboard.data.penerbit')) active @endif">
-                            <a href="{{ route('dashboard.data.penerbit') }}">Data Penerbit</a>
+                        <li class="submenu-item @if(url()->current() == route('dashboard.admin.data.penerbit')) active @endif">
+                            <a href="{{ route('dashboard.admin.data.penerbit') }}">Data Penerbit</a>
                         </li>
                         <li class="submenu-item ">
                             <a href="component-badge.html">Data Peminjaman</a>
                         </li>
-                        <li class="submenu-item @if(url()->current() == route('dashboard.data.anggota')) active @endif">
-                            <a href="{{ route('dashboard.data.anggota') }}">Data Anggota</a>
+                        <li class="submenu-item @if(url()->current() == route('dashboard.admin.data.anggota')) active @endif">
+                            <a href="{{ route('dashboard.admin.data.anggota') }}">Data Anggota</a>
                         </li>
-                        <li class="submenu-item @if(url()->current() == route('dashboard.data.administrator')) active @endif">
-                            <a href="{{ route('dashboard.data.administrator') }}">Data Administrator</a>
+                        <li class="submenu-item @if(url()->current() == route('dashboard.admin.data.administrator')) active @endif">
+                            <a href="{{ route('dashboard.admin.data.administrator') }}">Data Administrator</a>
                         </li>
                     </ul>
                 </li>
-                
+                <li
+                    class="sidebar-item @if(url()->current() == route('dashboard.admin.identitas')) active @endif ">
+                    <a href="{{ route('dashboard.admin.identitas') }}" class='sidebar-link'>
+                        <i class="bi bi-info-circle-fill"></i>
+                        <span>Identitas</span>
+                    </a>
+                </li>
+                @else 
+                <li
+                    class="sidebar-item @if(url()->current() == route('dashboard.user.index')) active @endif ">
+                    <a href="{{ route('dashboard.user.index') }}" class='sidebar-link'>
+                        <i class="bi bi-grid-fill"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li
+                    class="sidebar-item @if(url()->current() == route('dashboard.user.buku.index')) active @endif ">
+                    <a href="{{ route('dashboard.user.buku.index') }}" class='sidebar-link'>
+                        <i class="bi bi-book-fill"></i>
+                        <span>Buku</span>
+                    </a>
+                </li>
+                @endif
                 <li
                     class="sidebar-item">
                     <a href="{{ route('auth.logout') }}" class='sidebar-link'>

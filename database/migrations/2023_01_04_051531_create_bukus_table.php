@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('bukus', function (Blueprint $table) {
             $table->id('id_buku');
             $table->string('judul_buku', 125);
+            $table->string('penulis', 125);
             $table->unsignedBigInteger('kategori_id');
             $table->unsignedBigInteger('penerbit_id');
             $table->string('tahun_terbit', 125);

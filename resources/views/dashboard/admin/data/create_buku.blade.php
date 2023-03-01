@@ -12,8 +12,8 @@
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Data Kategori</h3>
-                <p class="text-subtitle text-muted">Sebuah halaman untuk mengelola data kategori buku.</p>
+                <h3>Tambah Buku</h3>
+                <p class="text-subtitle text-muted">Sebuah halaman untuk menambahkan buku.</p>
             </div>
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -21,7 +21,7 @@
                         <li class="breadcrumb-item">Dashboard</li>
                         <li class="breadcrumb-item">Data</li>
                         <li class="breadcrumb-item">Buku</li>
-                        <li class="breadcrumb-item active" aria-current="page">Kategori</li>
+                        <li class="breadcrumb-item active" aria-current="page">Tambah</li>
                     </ol>
                 </nav>
             </div>
@@ -31,7 +31,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    <form method="post" action="{{ route('dashboard.data.buku.doCreate') }}" enctype="multipart/form-data">
+                    <form method="post" action="{{ route('dashboard.admin.data.buku.doCreate') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col">
@@ -129,7 +129,7 @@
             $('.loading').show();
             $('.form').hide();
             $.ajax({
-                url: "{{ route('dashboard.data.kategori_buku.get') }}",
+                url: "{{ route('dashboard.admin.data.kategori_buku.get') }}",
                 data: {
                     id
                 },

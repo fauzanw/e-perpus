@@ -64,7 +64,7 @@
                                         <a class="badge bg-primary btnEdit mx-1" data-id="{{ $penerbit->id_penerbit }}" data-bs-toggle="modal" data-bs-target="#editModal">
                                             Edit
                                         </a>
-                                        <a href="{{ route('dashboard.data.penerbit.delete', $penerbit->id_penerbit) }}" class="badge bg-danger">
+                                        <a href="{{ route('dashboard.admin.data.penerbit.delete', $penerbit->id_penerbit) }}" class="badge bg-danger">
                                             Hapus
                                         </a>
                                     </td>
@@ -79,7 +79,7 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('dashboard.data.penerbit.create') }}" method="post">
+                    <form action="{{ route('dashboard.admin.data.penerbit.create') }}" method="post">
                         @csrf
                         <div class="form-group">
                             <label for="kode_penerbit">Kode Penerbit</label>
@@ -112,7 +112,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('dashboard.data.penerbit.edit') }}" method="post">
+                    <form action="{{ route('dashboard.admin.data.penerbit.edit') }}" method="post">
                         @method('PUT')
                         <div class="form">
                             @csrf
@@ -163,7 +163,7 @@
 @section('js')
     <script>
         function verifPenerbit(id) {
-            window.location.href = "{{ route('dashboard.data.penerbit.verify') }}?id=" + id;
+            window.location.href = "{{ route('dashboard.admin.data.penerbit.verify') }}?id=" + id;
         }
 
         $('.loading').hide();
@@ -172,7 +172,7 @@
             $('.loading').show();
             $('.form').hide();
             $.ajax({
-                url: "{{ route('dashboard.data.penerbit.get') }}",
+                url: "{{ route('dashboard.admin.data.penerbit.get') }}",
                 data: {
                     id: penerbit_id
                 },

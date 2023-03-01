@@ -4,8 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
-class CustomGuest
+class Admin
 {
     /**
      * Handle an incoming request.
@@ -16,10 +18,10 @@ class CustomGuest
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!$request->session()->has('user')) {
+        if(Auth::user()->role == "admin") {
             return $next($request);
         }
 
-        return redirect()->route('dashboard.admin.index');
+        abort(404);
     }
 }

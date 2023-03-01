@@ -43,7 +43,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item @if(request()->segment(1) == 'dashboard' && request()->segment(2) == 'index') active @endif">
-                <a class="nav-link @if(url()->current() == route('dashboard.index')) active @endif" href="{{ route('dashboard.index') }}">
+                <a class="nav-link @if(url()->current() == route('dashboard.admin.index')) active @endif" href="{{ route('dashboard.admin.index') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -60,11 +60,11 @@
             </a>
             <div id="collapseTwo" class="collapse @if(request()->segment(1) == 'dashboard' && request()->segment(2) == 'data') show @endif" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item @if(url()->current() == route('dashboard.data.buku')) active @endif" href="{{ route('dashboard.data.buku') }}">Data Buku</a>
-                        <a class="collapse-item @if(url()->current() == route('dashboard.data.kategori_buku')) active @endif" href="{{ route('dashboard.data.kategori_buku') }}">Data Kategori Buku</a>
-                        <a class="collapse-item @if(url()->current() == route('dashboard.data.anggota')) active @endif" href="{{ route('dashboard.data.anggota') }}">Data Anggota</a>
-                        <a class="collapse-item @if(url()->current() == route('dashboard.data.penerbit')) active @endif" href="{{ route('dashboard.data.penerbit') }}">Data Penerbit</a>
-                        <a class="collapse-item @if(url()->current() == route('dashboard.data.administrator')) active @endif" href="{{ route('dashboard.data.administrator') }}">Data Administrator</a>
+                        <a class="collapse-item @if(url()->current() == route('dashboard.admin.data.buku')) active @endif" href="{{ route('dashboard.admin.data.buku') }}">Data Buku</a>
+                        <a class="collapse-item @if(url()->current() == route('dashboard.admin.data.kategori_buku')) active @endif" href="{{ route('dashboard.admin.data.kategori_buku') }}">Data Kategori Buku</a>
+                        <a class="collapse-item @if(url()->current() == route('dashboard.admin.data.anggota')) active @endif" href="{{ route('dashboard.admin.data.anggota') }}">Data Anggota</a>
+                        <a class="collapse-item @if(url()->current() == route('dashboard.admin.data.penerbit')) active @endif" href="{{ route('dashboard.admin.data.penerbit') }}">Data Penerbit</a>
+                        <a class="collapse-item @if(url()->current() == route('dashboard.admin.data.administrator')) active @endif" href="{{ route('dashboard.admin.data.administrator') }}">Data Administrator</a>
                         <a class="collapse-item" href="cards.html">Data Peminjaman</a>
                     </div>
                 </div>
